@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Cel-Far</string>
+    <string name="intro">Hello, you can use this application to check your skills on tempreature conversion, or calculate the correct value.</string>
+    <string name="check">Check</string>
+    <string name="calculate">Calculate</string>
+    <string name="far">Farenhit</string>
+    <string name="cel">Celcius</string>
+    <string name="go">Go!</string>
+    <string name="title_cala_activity_a">Converter Screen</string>
+    <string name="back">Return</string>
+</resources>
