@@ -46,14 +46,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if(Double.parseDouble(cel.getText().toString()) * (9/5) + 32 == Double.parseDouble(far.getText().toString())) {
-                            Intent intent = new Intent(this, CalcActivityA.class);
+                            Intent intent = new Intent(getApplicationContext(), CalcActivityA.class);
                             intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
                             intent.putExtra("Farenhit", far.getText().toString());
                             intent.putExtra("Celcius", cel.getText().toString());
                             startActivity(intent);
                         }
                         else {
-                            Intent intent = new Intent(this, CalcActivityB.class);
+                            Intent intent = new Intent(getApplicationContext(), CalcActivityB.class);
                             intent.setAction(CalcActivityB.ACTION_CALC_ACTIVITY_B);
                             intent.putExtra("Farenhit", far.getText().toString());
                             intent.putExtra("Celcius", cel.getText().toString());
@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 go.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setClass(this, CalcActivityC.class);
+                        Intent intent = new Intent(getApplicationContext(), CalcActivityC.class);
                         intent.setAction(CalcActivityC.ACTION_CALC_ACTIVITY_C);
                         if(!(far.getText().toString().isEmpty())){
                             intent.putExtra("put", "far");

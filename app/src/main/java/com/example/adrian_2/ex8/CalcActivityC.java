@@ -7,10 +7,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * Created by Adrian_2 on 26/11/2016.
- */
-
 public class CalcActivityC extends AppCompatActivity {
 
     public static final String ACTION_CALC_ACTIVITY_C = "com.Ex8.CalcActivityC";
@@ -36,7 +32,7 @@ public class CalcActivityC extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setAction(MainActivity.ACTION_MAIN_ACTIVITY);
                 startActivity(intent);
             }

@@ -29,7 +29,7 @@ public class CalcActivityA extends AppCompatActivity {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.setAction(MainActivity.ACTION_MAIN_ACTIVITY);
                 startActivity(intent);
             }
