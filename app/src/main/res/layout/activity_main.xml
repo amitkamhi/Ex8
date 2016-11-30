@@ -51,7 +51,7 @@
 
     <EditText
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:ems="10"
         android:id="@+id/etCel"
         android:layout_width="100dp"
@@ -62,7 +62,7 @@
 
     <EditText
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:ems="10"
         android:layout_marginTop="85dp"
         android:id="@+id/etFar"

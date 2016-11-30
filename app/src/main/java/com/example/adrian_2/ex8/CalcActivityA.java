@@ -21,15 +21,30 @@ public class CalcActivityA extends AppCompatActivity {
 
         String far = intent.getExtras().getString("Farenhit");
         String cel = intent.getExtras().getString("Celcius");
-
         TextView textView = (TextView)findViewById(R.id.tvCalActA);
-        textView.setText("Bravo!, the temperature " + cel + "C, is indeed " + far + "F");
+
+        if(intent.getExtras().getString("type").equals("check")){
+            if (intent.getExtras().getString("check").equals("right")){
+                textView.setText("Bravo!, the temperature " + cel + "C, is indeed " + far + "F");
+            }
+            else{
+                textView.setText("Oops!, your answer is wrong, you may try again.");
+            }
+        }
+        else{
+            String put = intent.getExtras().getString("put");
+            if (put.equals("put"))
+                textView.setText("The temperature " + far + "F, is converted to " + cel + "C");
+            else
+                textView.setText("The temperature " + cel + "C, is converted to " + far + "F");
+        }
+
 
         Button back = (Button) findViewById(R.id.bReturn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(CalcActivityA.this, MainActivity.class);
                 intent.setAction(MainActivity.ACTION_MAIN_ACTIVITY);
                 startActivity(intent);
             }

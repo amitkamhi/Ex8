@@ -58,8 +58,18 @@ public class MainActivity extends AppCompatActivity implements TextWatcher{
         if(check.isChecked()){
             findViewById(R.id.bGo).setEnabled(!(far.getText().toString().isEmpty()) && !(cel.getText().toString().isEmpty()));
         }
+        else{
+            findViewById(R.id.bGo).setEnabled(false);
+        }
         if(calculate.isChecked()){
-            findViewById(R.id.bGo).setEnabled(!(far.getText().toString().isEmpty()) || !(cel.getText().toString().isEmpty()));
+            if ((!(far.getText().toString().isEmpty()) && !(cel.getText().toString().isEmpty()))){
+                findViewById(R.id.bGo).setEnabled(false);
+            }
+            else{
+                if ((!(far.getText().toString().isEmpty()) || !(cel.getText().toString().isEmpty()))){
+                    findViewById(R.id.bGo).setEnabled(true);
+                }
+            }
         }
     }
 
@@ -73,18 +83,17 @@ public class MainActivity extends AppCompatActivity implements TextWatcher{
             go.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(Double.parseDouble(cel.getText().toString()) * (9/5) + 32 == Double.parseDouble(far.getText().toString())) {
-                        Intent intent = new Intent(getApplicationContext(), CalcActivityA.class);
-                        intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
-                        intent.putExtra("Farenhit", far.getText().toString());
-                        intent.putExtra("Celcius", cel.getText().toString());
+                    Intent intent = new Intent(MainActivity.this, CalcActivityA.class);
+                    intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
+                    intent.putExtra("type", "check");
+                    intent.putExtra("Farenhit", far.getText().toString());
+                    intent.putExtra("Celcius", cel.getText().toString());
+                    if(Double.parseDouble(cel.getText().toString()) * 9 / 5 + 32 == Double.parseDouble(far.getText().toString())) {
+                        intent.putExtra("check", "right");
                         startActivity(intent);
                     }
                     else {
-                        Intent intent = new Intent(getApplicationContext(), CalcActivityB.class);
-                        intent.setAction(CalcActivityB.ACTION_CALC_ACTIVITY_B);
-                        intent.putExtra("Farenhit", far.getText().toString());
-                        intent.putExtra("Celcius", cel.getText().toString());
+                        intent.putExtra("check", "wrong");
                         startActivity(intent);
                     }
                 }
@@ -99,26 +108,26 @@ public class MainActivity extends AppCompatActivity implements TextWatcher{
             cel.setEnabled(true);
             far.setEnabled(true);
 
-            go.setEnabled(true);
             go.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                       /* Intent intent = new Intent(getApplicationContext(), CalcActivityC.class);
-                        intent.setAction(CalcActivityC.ACTION_CALC_ACTIVITY_C);
+                        Intent intent = new Intent(MainActivity.this, CalcActivityA.class);
+                        intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
+                        intent.putExtra("type", "calculate");
                         if(!(far.getText().toString().isEmpty())){
                             intent.putExtra("put", "far");
                             intent.putExtra("Farenhit", far.getText().toString());
-                            double celcu = (Double.parseDouble(far.getText().toString())-32)*(5/9);
-                            intent.putExtra("Celcius", celcu);
-
+                            double celcu = (Double.parseDouble(far.getText().toString())-32)*5/9;
+                            intent.putExtra("Celcius", celcu +"");
+                            startActivity(intent);
                         }
                         else{
                             intent.putExtra("put", "cel");
                             intent.putExtra("Celcius", cel.getText().toString());
-                            double fare = Double.parseDouble(cel.getText().toString())*(9/5)+32;
-                            intent.putExtra("Farenhit", fare);
+                            double fare = Double.parseDouble(cel.getText().toString())*9/5+32;
+                            intent.putExtra("Farenhit", fare + "");
+                            startActivity(intent);
                         }
-                        startActivity(intent);*/
                     }
                 });
         }
