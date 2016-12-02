@@ -118,14 +118,14 @@ public class MainActivity extends AppCompatActivity implements TextWatcher{
                             intent.putExtra("put", "far");
                             intent.putExtra("Farenhit", far.getText().toString());
                             double celcu = (Double.parseDouble(far.getText().toString())-32)*5/9;
-                            intent.putExtra("Celcius", celcu +"");
+                            intent.putExtra("Celcius", String.format("%.2f", celcu));
                             startActivity(intent);
                         }
                         else{
                             intent.putExtra("put", "cel");
                             intent.putExtra("Celcius", cel.getText().toString());
                             double fare = Double.parseDouble(cel.getText().toString())*9/5+32;
-                            intent.putExtra("Farenhit", fare + "");
+                            intent.putExtra("Farenhit", String.format("%.2f", fare));
                             startActivity(intent);
                         }
                     }
