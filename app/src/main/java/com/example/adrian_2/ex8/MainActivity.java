@@ -1,5 +1,6 @@
 package com.example.adrian_2.ex8;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher{
+public class MainActivity extends Activity implements TextWatcher{
 
     public static final String ACTION_MAIN_ACTIVITY= "com.Ex8.MainActivity";
     private final int CALC_ACTIVITY_REQUEST = 1;
