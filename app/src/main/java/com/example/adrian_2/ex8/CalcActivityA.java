@@ -1,5 +1,6 @@
 package com.example.adrian_2.ex8;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 
-public class CalcActivityA extends AppCompatActivity {
+public class CalcActivityA extends Activity {
 
     public static final String ACTION_CALC_ACTIVITY_A = "com.Ex8.CalcActivityA";
 

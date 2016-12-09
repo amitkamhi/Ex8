@@ -20,9 +20,4 @@
         android:showAsAction="always"
         android:icon="@mipmap/help"
         android:title="Help"/>
-
-
-
-
-
 </menu>

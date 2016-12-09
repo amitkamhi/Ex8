@@ -18,13 +18,68 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/logo"/>
 
+    <Button
+        android:text="@string/go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bGo"
+        android:enabled="false"
+        android:layout_above="@+id/tvCel"
+        android:layout_centerHorizontal="true" />
+
+    <com.example.adrian_2.ex8.MyEditText
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/etFar"
+        android:layout_width="100dp"
+        android:enabled="false"
+        android:layout_alignBottom="@+id/bGo"
+        android:layout_toStartOf="@+id/bGo" />
+
+    <com.example.adrian_2.ex8.MyEditText
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/etCel"
+        android:layout_width="100dp"
+        android:enabled="false"
+        android:layout_above="@+id/tvCel"
+        android:layout_toEndOf="@+id/bGo" />
+
+    <TextView
+        android:text="@string/cel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCel"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/bGo"
+        android:layout_marginStart="17dp" />
+
+    <TextView
+        android:text="@string/far"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFar"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/bGo"
+        android:layout_marginEnd="20dp" />
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="100dp"
+        android:text="@string/intro"
+        android:id="@+id/tvIntro"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
     <RadioGroup
-        android:layout_width="400dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/radioGroup"
         android:orientation="horizontal"
-        android:layout_alignBottom="@+id/tvIntro"
-        android:layout_alignParentStart="true">
+        android:layout_below="@+id/ivLogo"
+        android:layout_alignEnd="@+id/etCel">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -38,64 +93,12 @@
             android:layout_height="wrap_content"
             android:text="@string/calculate"
             android:id="@+id/rbCalculate"
-            android:layout_marginLeft="70dp"/>
+            android:layout_marginLeft="70dp"
+            android:layout_alignTop="@+id/radioGroup"
+            android:layout_alignStart="@+id/bGo"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1" />
+
     </RadioGroup>
-
-    <EditText
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/etCel"
-        android:layout_width="100dp"
-        android:layout_alignTop="@+id/bGo"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="36dp"
-        android:enabled="false"/>
-
-    <EditText
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:layout_marginTop="85dp"
-        android:id="@+id/etFar"
-        android:layout_width="100dp"
-        android:layout_below="@+id/tvIntro"
-        android:layout_toStartOf="@+id/bGo"
-        android:enabled="false"/>
-
-    <Button
-        android:text="@string/go"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bGo"
-        android:layout_alignBaseline="@+id/etFar"
-        android:layout_alignBottom="@+id/etFar"
-        android:layout_toStartOf="@+id/etCel"
-        android:enabled="false"/>
-
-    <TextView
-        android:text="@string/far"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etCel"
-        android:layout_toStartOf="@+id/bGo"
-        android:layout_marginEnd="14dp"
-        android:id="@+id/tvFar" />
-
-    <TextView
-        android:text="@string/cel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etCel"
-        android:layout_alignEnd="@+id/tvIntro"
-        android:id="@+id/tvCel" />
-
-    <TextView
-        android:layout_width="280dp"
-        android:layout_height="100dp"
-        android:text="@string/intro"
-        android:id="@+id/tvIntro"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
