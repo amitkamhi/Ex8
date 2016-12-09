@@ -2,11 +2,17 @@ package com.example.adrian_2.ex8;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.SpannableString;
 import android.text.TextWatcher;
+import android.text.style.ForegroundColorSpan;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +28,39 @@ public class MainActivity extends Activity implements TextWatcher{
     Button go;
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.context, menu);
+
+        int[] colors = new int[]{Color.RED, Color.rgb(0,153,0), Color.BLUE};
+        for (int i = 0; i<colors.length;i++)
+        {
+            MenuItem item = menu.getItem(i);
+            SpannableString s  = new SpannableString(item.getTitle());
+            s.setSpan(new ForegroundColorSpan(colors[i]), 0,s.length(),0);
+            item.setTitle(s);
+        }
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch(id)
+        {
+            case R.id.action_help:
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://en.wikipedia.org/wiki/Conversion_of_units_of_temperature"));
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -31,6 +70,9 @@ public class MainActivity extends Activity implements TextWatcher{
         cel = (EditText)findViewById(R.id.etCel);
         cel.addTextChangedListener(this);
         go = (Button)findViewById(R.id.bGo);
+
+        registerForContextMenu(cel);
+        registerForContextMenu(far);
 
         check = (RadioButton) findViewById(R.id.rbCheck);
         check.setOnClickListener(new checkListener());

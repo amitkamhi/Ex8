@@ -11,14 +11,6 @@
     tools:context="com.example.adrian_2.ex8.MainActivity">
 
 
-    <TextView
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:text="@string/intro"
-        android:id="@+id/tvIntro"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
-
     <ImageView
         android:layout_width="50dp"
         android:layout_height="100dp"
@@ -97,5 +89,13 @@
         android:layout_below="@+id/etCel"
         android:layout_alignEnd="@+id/tvIntro"
         android:id="@+id/tvCel" />
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="100dp"
+        android:text="@string/intro"
+        android:id="@+id/tvIntro"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
