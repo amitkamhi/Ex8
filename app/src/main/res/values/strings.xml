@@ -8,4 +8,6 @@
     <string name="go">Go!</string>
     <string name="title_cala_activity_a">Converter Screen</string>
     <string name="back">Return</string>
+    <string name="none">None</string>
+    <string name="full">Full</string>
 </resources>

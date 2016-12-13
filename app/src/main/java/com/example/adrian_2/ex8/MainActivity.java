@@ -21,18 +21,57 @@ import android.widget.RadioGroup;
 
 public class MainActivity extends Activity implements TextWatcher{
 
+    private final static int REQUEST_CODE = 1;
     public static final String ACTION_MAIN_ACTIVITY= "com.Ex8.MainActivity";
     private final int CALC_ACTIVITY_REQUEST = 1;
     RadioButton check, calculate;
     EditText far, cel;
     Button go;
     int menuId;
+    boolean checkBoolean, calculateBoolean;
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        if(savedInstanceState != null){
+            int celColor =savedInstanceState.getInt("edit text cel");
+            int farColor = savedInstanceState.getInt("button calculate");
+            cel.setTextColor(celColor);
+            far.setTextColor(farColor);
+        }
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(REQUEST_CODE == requestCode){
+            RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+            radioGroup.clearCheck();
+            far = (EditText) findViewById(R.id.etFar);
+            far.setText("");
+            cel = (EditText) findViewById(R.id.etCel);
+            cel.setText("");
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("edit text cel",cel.getCurrentTextColor());
+        outState.putInt("button calculate",far.getCurrentTextColor());
+        //outState.putInt("check color", fa);
+        //outState.putInt("calculate color",color);
+
+    }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.context, menu);
 
-        int color = ((EditText)v).getCurrentTextColor();
+        Integer x = null;
+
+        //if(color == x){
+         int color = ((EditText)v).getCurrentTextColor();
+        //}
         menuId = color==Color.BLUE? R.id.colorBlue :color==Color.GREEN? R.id.colorGreen: R.id.colorRed;
         menu.findItem(menuId).setChecked(true);
 
@@ -90,6 +129,24 @@ public class MainActivity extends Activity implements TextWatcher{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if(savedInstanceState != null){
+            far = (EditText) findViewById(R.id.etFar);
+            cel = (EditText) findViewById(R.id.etCel);
+            if(checkBoolean){
+                findViewById(R.id.bGo).setEnabled(!(far.getText().toString().isEmpty()) && !(cel.getText().toString().isEmpty()));
+            }
+            if(calculateBoolean){
+                if ((!(far.getText().toString().isEmpty()) && !(cel.getText().toString().isEmpty()))){
+                    findViewById(R.id.bGo).setEnabled(false);
+                }
+                else{
+                    if ((!(far.getText().toString().isEmpty()) || !(cel.getText().toString().isEmpty()))){
+                        findViewById(R.id.bGo).setEnabled(true);
+                    }
+                }
+            }
+        }
 
         far = (EditText)findViewById(R.id.etFar);
         far.addTextChangedListener(this);
@@ -159,6 +216,7 @@ public class MainActivity extends Activity implements TextWatcher{
             go.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    checkBoolean = true;
                     Intent intent = new Intent(MainActivity.this, CalcActivityA.class);
                     intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
                     intent.putExtra("type", "check");
@@ -166,7 +224,7 @@ public class MainActivity extends Activity implements TextWatcher{
                     intent.putExtra("Celcius", cel.getText().toString());
                     if(Double.parseDouble(cel.getText().toString()) * 9 / 5 + 32 == Double.parseDouble(far.getText().toString())) {
                         intent.putExtra("check", "right");
-                        startActivity(intent);
+                        startActivityForResult(intent, REQUEST_CODE);
                     }
                     else {
                         intent.putExtra("check", "wrong");
@@ -187,6 +245,7 @@ public class MainActivity extends Activity implements TextWatcher{
             go.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        calculateBoolean = true;
                         Intent intent = new Intent(MainActivity.this, CalcActivityA.class);
                         intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
                         intent.putExtra("type", "calculate");
@@ -195,14 +254,14 @@ public class MainActivity extends Activity implements TextWatcher{
                             intent.putExtra("Farenhit", far.getText().toString());
                             double celcu = (Double.parseDouble(far.getText().toString())-32)*5/9;
                             intent.putExtra("Celcius", String.format("%.2f", celcu));
-                            startActivity(intent);
+                            startActivityForResult(intent, REQUEST_CODE);
                         }
                         else{
                             intent.putExtra("put", "cel");
                             intent.putExtra("Celcius", cel.getText().toString());
                             double fare = Double.parseDouble(cel.getText().toString())*9/5+32;
                             intent.putExtra("Farenhit", String.format("%.2f", fare));
-                            startActivity(intent);
+                            startActivityForResult(intent, REQUEST_CODE);
                         }
                     }
                 });

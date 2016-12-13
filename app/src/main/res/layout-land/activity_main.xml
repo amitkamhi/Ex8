@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.adrian_2.ex8.MainActivity">
+
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivLogo"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/logo"/>
+
+    <TextView
+        android:layout_width="280dp"
+        android:layout_height="100dp"
+        android:text="@string/intro"
+        android:id="@+id/tvIntro"
+        android:freezesText="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <RadioGroup
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ivLogo"
+        android:layout_alignEnd="@+id/etCel">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check"
+            android:id="@+id/rbCheck"
+            android:layout_marginLeft="50dp"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/calculate"
+            android:id="@+id/rbCalculate"
+            android:layout_marginLeft="70dp"
+            android:layout_alignTop="@+id/radioGroup"
+            android:layout_alignStart="@+id/bGo"
+            android:layout_marginStart="14dp"
+            android:layout_weight="1" />
+
+    </RadioGroup>
+
+    <com.example.adrian_2.ex8.MyEditText
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/etFar"
+        android:layout_width="100dp"
+        android:enabled="false"
+        android:freezesText="true"
+        android:layout_alignTop="@+id/bGo"
+        android:layout_toStartOf="@+id/bGo" />
+
+    <Button
+        android:text="@string/go"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bGo"
+        android:enabled="false"
+        android:layout_alignBottom="@+id/tvCel"
+        android:layout_centerHorizontal="true" />
+
+    <com.example.adrian_2.ex8.MyEditText
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/etCel"
+        android:layout_width="100dp"
+        android:enabled="false"
+        android:freezesText="true"
+        android:layout_alignTop="@+id/bGo"
+        android:layout_toEndOf="@+id/bGo" />
+
+    <TextView
+        android:text="@string/cel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvCel"
+        android:freezesText="true"
+        android:layout_marginEnd="24dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/etCel"
+        android:layout_marginBottom="61dp" />
+
+    <TextView
+        android:text="@string/far"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFar"
+        android:freezesText="true"
+        android:layout_alignBottom="@+id/bGo"
+        android:layout_alignStart="@+id/etFar"
+        android:layout_marginStart="24dp" />
+
+</RelativeLayout>

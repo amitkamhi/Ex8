@@ -20,35 +20,37 @@ public class CalcActivityA extends Activity {
         setContentView(R.layout.calc_activity_a);
         Intent intent = getIntent();
 
-        String far = intent.getExtras().getString("Farenhit");
-        String cel = intent.getExtras().getString("Celcius");
-        TextView textView = (TextView)findViewById(R.id.tvCalActA);
+        if(intent == null || intent.getAction() == null){
+        }
+        else {
+            String far = intent.getExtras().getString("Farenhit");
+            String cel = intent.getExtras().getString("Celcius");
+            TextView textView = (TextView) findViewById(R.id.tvCalActA);
 
-        if(intent.getExtras().getString("type").equals("check")){
-            if (intent.getExtras().getString("check").equals("right")){
-                textView.setText("Bravo!, the temperature " + cel + "C, is indeed " + far + "F");
-            }
-            else{
-                textView.setText("Oops!, your answer is wrong, you may try again.");
+            if (intent.getExtras().getString("type").equals("check")) {
+                if (intent.getExtras().getString("check").equals("right")) {
+                    textView.setText("Bravo!, the temperature " + cel + "C, is indeed " + far + "F");
+                } else {
+                    textView.setText("Oops!, your answer is wrong, you may try again.");
+                }
+            } else {
+                String put = intent.getExtras().getString("put");
+                if (put.equals("put"))
+                    textView.setText("The temperature " + far + "F, is converted to " + cel + "C");
+                else
+                    textView.setText("The temperature " + cel + "C, is converted to " + far + "F");
             }
         }
-        else{
-            String put = intent.getExtras().getString("put");
-            if (put.equals("put"))
-                textView.setText("The temperature " + far + "F, is converted to " + cel + "C");
-            else
-                textView.setText("The temperature " + cel + "C, is converted to " + far + "F");
-        }
-
 
         Button back = (Button) findViewById(R.id.bReturn);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CalcActivityA.this, MainActivity.class);
-                intent.setAction(MainActivity.ACTION_MAIN_ACTIVITY);
-                startActivity(intent);
+                setResult(RESULT_OK);
+                finish();
             }
         });
+
+
     }
 }
