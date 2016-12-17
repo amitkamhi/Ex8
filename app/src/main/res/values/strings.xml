@@ -10,4 +10,9 @@
     <string name="back">Return</string>
     <string name="none">None</string>
     <string name="full">Full</string>
+    <string name="closing">Closing the app</string>
+    <string name="sure">Are you sure?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="catchMyDialog">Hosting activity must implement the interface ResultListener</string>
 </resources>

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -19,7 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-public class MainActivity extends Activity implements TextWatcher{
+public class MainActivity extends Activity implements TextWatcher, MyDialog.ResultsListener{
 
     private final static int REQUEST_CODE = 1;
     public static final String ACTION_MAIN_ACTIVITY= "com.Ex8.MainActivity";
@@ -58,9 +59,6 @@ public class MainActivity extends Activity implements TextWatcher{
         super.onSaveInstanceState(outState);
         outState.putInt("edit text cel",cel.getCurrentTextColor());
         outState.putInt("button calculate",far.getCurrentTextColor());
-        //outState.putInt("check color", fa);
-        //outState.putInt("calculate color",color);
-
     }
 
     @Override
@@ -99,6 +97,9 @@ public class MainActivity extends Activity implements TextWatcher{
                 intent.setData(Uri.parse("https://en.wikipedia.org/wiki/Conversion_of_units_of_temperature"));
                 startActivity(intent);
                 return true;
+            case R.id.action_exit:
+                MyDialog.newInstance(MyDialog.EXIT_DIALOG).show(getFragmentManager(),"");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -130,24 +131,6 @@ public class MainActivity extends Activity implements TextWatcher{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState != null){
-            far = (EditText) findViewById(R.id.etFar);
-            cel = (EditText) findViewById(R.id.etCel);
-            if(checkBoolean){
-                findViewById(R.id.bGo).setEnabled(!(far.getText().toString().isEmpty()) && !(cel.getText().toString().isEmpty()));
-            }
-            if(calculateBoolean){
-                if ((!(far.getText().toString().isEmpty()) && !(cel.getText().toString().isEmpty()))){
-                    findViewById(R.id.bGo).setEnabled(false);
-                }
-                else{
-                    if ((!(far.getText().toString().isEmpty()) || !(cel.getText().toString().isEmpty()))){
-                        findViewById(R.id.bGo).setEnabled(true);
-                    }
-                }
-            }
-        }
-
         far = (EditText)findViewById(R.id.etFar);
         far.addTextChangedListener(this);
         cel = (EditText)findViewById(R.id.etCel);
@@ -157,12 +140,42 @@ public class MainActivity extends Activity implements TextWatcher{
         registerForContextMenu(cel);
         registerForContextMenu(far);
 
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroup);
+
         check = (RadioButton) findViewById(R.id.rbCheck);
         check.setOnClickListener(new checkListener());
 
         calculate = (RadioButton) findViewById(R.id.rbCalculate);
         calculate.setOnClickListener(new calculateListener());
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                RadioButton rb = (RadioButton)group.findViewById(checkedId);
+                int radioGroupCurrentIndex = group.indexOfChild(rb);
+                if(radioGroupCurrentIndex==0)
+                {
+                    go.setEnabled(false);
+                    far.setEnabled(true);
+                    cel.setEnabled(true);
+                }
+                else if(radioGroupCurrentIndex==1)
+                {
+                    if(!far.getText().toString().isEmpty() && !cel.getText().toString().isEmpty())
+                    {
+                        go.setEnabled(true);
+                        far.setEnabled(true);
+                        cel.setEnabled(true);
+                    }
+                    else
+                    {
+                        far.setEnabled(true);
+                        cel.setEnabled(true);
+                    }
+                }
+            }
+        });
 
     }
 
@@ -203,6 +216,18 @@ public class MainActivity extends Activity implements TextWatcher{
                     findViewById(R.id.bGo).setEnabled(true);
                 }
             }
+        }
+    }
+
+    @Override
+    public void onFinishedDialog(int requestCode, Object result) {
+        switch(requestCode){
+            case MyDialog.EXIT_DIALOG:
+                finish();
+                System.exit(0);
+                break;
+            case MyDialog.PRECISION_DIALIOG:
+                break;
         }
     }
 
