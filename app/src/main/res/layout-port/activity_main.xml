@@ -29,7 +29,7 @@
 
     <com.example.adrian_2.ex8.MyEditText
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/etFar"
         android:layout_width="100dp"
@@ -40,7 +40,7 @@
 
     <com.example.adrian_2.ex8.MyEditText
         android:layout_height="wrap_content"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:ems="10"
         android:id="@+id/etCel"
         android:layout_width="100dp"

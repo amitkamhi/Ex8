@@ -15,4 +15,7 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="catchMyDialog">Hosting activity must implement the interface ResultListener</string>
+    <string name="precisinTitle">Set the numbers Precision</string>
+    <string name="okey">Okey</string>
+    <string name="cancel">Cancel</string>
 </resources>

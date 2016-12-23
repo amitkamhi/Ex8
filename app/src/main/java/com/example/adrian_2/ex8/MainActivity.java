@@ -20,11 +20,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-public class MainActivity extends Activity implements TextWatcher, MyDialog.ResultsListener{
+public class MainActivity extends Activity implements TextWatcher, MyDialog.ResultsListener, View.OnFocusChangeListener{
 
     private final static int REQUEST_CODE = 1;
     public static final String ACTION_MAIN_ACTIVITY= "com.Ex8.MainActivity";
     private final int CALC_ACTIVITY_REQUEST = 1;
+    private int currentPrecision = 0;
     RadioButton check, calculate;
     EditText far, cel;
     Button go;
@@ -43,6 +44,17 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("edit text cel",cel.getCurrentTextColor());
+        outState.putInt("button calculate",far.getCurrentTextColor());
+    }
+
+    public int getPrecision(){
+        return currentPrecision;
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(REQUEST_CODE == requestCode){
             RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
@@ -52,13 +64,6 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
             cel = (EditText) findViewById(R.id.etCel);
             cel.setText("");
         }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt("edit text cel",cel.getCurrentTextColor());
-        outState.putInt("button calculate",far.getCurrentTextColor());
     }
 
     @Override
@@ -100,6 +105,9 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
             case R.id.action_exit:
                 MyDialog.newInstance(MyDialog.EXIT_DIALOG).show(getFragmentManager(),"");
                 return true;
+            case R.id.action_settings:
+                MyDialog.newInstance(MyDialog.PRECISION_DIALIOG).show(getFragmentManager(),"");
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -133,9 +141,11 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
 
         far = (EditText)findViewById(R.id.etFar);
         far.addTextChangedListener(this);
+        far.setOnFocusChangeListener(this);
         cel = (EditText)findViewById(R.id.etCel);
         cel.addTextChangedListener(this);
         go = (Button)findViewById(R.id.bGo);
+        go.setOnFocusChangeListener(this);
 
         registerForContextMenu(cel);
         registerForContextMenu(far);
@@ -227,9 +237,26 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
                 System.exit(0);
                 break;
             case MyDialog.PRECISION_DIALIOG:
+                this.currentPrecision = (int)result;
+                setViewPrecision(cel);
+                setViewPrecision(far);
                 break;
         }
     }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        if(!hasFocus){
+            setViewPrecision(v);
+        }
+    }
+
+    private void setViewPrecision(View v){
+        if(!((EditText)v).getText().toString().isEmpty()) {
+            ((EditText) v).setText(String.format("%." + currentPrecision + "f",
+                    Double.parseDouble(((EditText) v).getText().toString())));
+        }
+        }
 
     private class checkListener implements View.OnClickListener{
 
@@ -245,8 +272,9 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
                     Intent intent = new Intent(MainActivity.this, CalcActivityA.class);
                     intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
                     intent.putExtra("type", "check");
-                    intent.putExtra("Farenhit", far.getText().toString());
-                    intent.putExtra("Celcius", cel.getText().toString());
+                    intent.putExtra("precision", currentPrecision);
+                    intent.putExtra("Farenhit", String.format("%."+currentPrecision+"f", far.getText().toString()));
+                    intent.putExtra("Celcius", String.format("%."+currentPrecision+"f", cel.getText().toString()));
                     if(Double.parseDouble(cel.getText().toString()) * 9 / 5 + 32 == Double.parseDouble(far.getText().toString())) {
                         intent.putExtra("check", "right");
                         startActivityForResult(intent, REQUEST_CODE);
@@ -274,22 +302,24 @@ public class MainActivity extends Activity implements TextWatcher, MyDialog.Resu
                         Intent intent = new Intent(MainActivity.this, CalcActivityA.class);
                         intent.setAction(CalcActivityA.ACTION_CALC_ACTIVITY_A);
                         intent.putExtra("type", "calculate");
+                        intent.putExtra("precision", currentPrecision);
                         if(!(far.getText().toString().isEmpty())){
                             intent.putExtra("put", "far");
-                            intent.putExtra("Farenhit", far.getText().toString());
+                            intent.putExtra("Farenhit", String.format("%."+currentPrecision+"f", far.getText().toString()));
                             double celcu = (Double.parseDouble(far.getText().toString())-32)*5/9;
-                            intent.putExtra("Celcius", String.format("%.2f", celcu));
+                            intent.putExtra("Celcius", String.format("%."+currentPrecision+"f", celcu).toString());
                             startActivityForResult(intent, REQUEST_CODE);
                         }
                         else{
                             intent.putExtra("put", "cel");
-                            intent.putExtra("Celcius", cel.getText().toString());
+                            intent.putExtra("Celcius", String.format("%."+currentPrecision+"f",cel.getText().toString()).toString());
                             double fare = Double.parseDouble(cel.getText().toString())*9/5+32;
-                            intent.putExtra("Farenhit", String.format("%.2f", fare));
+                            intent.putExtra("Farenhit", String.format("%."+currentPrecision+"f", fare).toString());
                             startActivityForResult(intent, REQUEST_CODE);
                         }
                     }
                 });
         }
+
     }
 }

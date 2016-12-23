@@ -7,6 +7,9 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 /**
  * Created by Kamhi on 16/12/2016.
@@ -26,7 +29,7 @@ public class MyDialog extends DialogFragment {
             return buildExitDialog().create();
         }
         else {
-            return null;
+            return builPrecisionDialog().create();
         }
     }
 
@@ -34,7 +37,8 @@ public class MyDialog extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.listener = (ResultsListener) activity;
+            this.listener = (ResultsListener) activity
+            ;
         }
         catch (ClassCastException e){
             String str = getResources().getString(R.string.catchMyDialog);
@@ -42,7 +46,7 @@ public class MyDialog extends DialogFragment {
         }
     }
 
-    @Override
+ /*   @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
@@ -52,7 +56,7 @@ public class MyDialog extends DialogFragment {
             String str = getResources().getString(R.string.catchMyDialog);
             throw new ClassCastException(str);
         }
-    }
+    } */
 
     @Override
     public void onDetach() {
@@ -85,6 +89,49 @@ public class MyDialog extends DialogFragment {
                         dismiss();
                     }
                 });
+    }
+
+    private AlertDialog.Builder builPrecisionDialog(){
+
+        final View view = getActivity().getLayoutInflater().inflate(R.layout.precisin, null);
+
+        int currentPrecision = ((MainActivity)getActivity()).getPrecision();
+        TextView textView = (TextView)view.findViewById(R.id.tVNumbers);
+        textView.setText(String.format("%."+currentPrecision+"f",123.0));
+
+        final SeekBar seekBar = (SeekBar)view.findViewById(R.id.seekBar);
+        seekBar.setProgress(currentPrecision);
+
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                TextView textView = (TextView)view.findViewById(R.id.tVNumbers);
+                textView.setText(String.format("%."+progress+"f",123.0));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+
+        });
+
+        return new AlertDialog.Builder(getActivity())
+                .setTitle(R.string.precisinTitle)
+                .setView(view)
+                .setPositiveButton(R.string.okey, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.onFinishedDialog(requestCode, seekBar.getProgress());
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dismiss();
+                    }
+                });
+
     }
 
     public interface ResultsListener{
