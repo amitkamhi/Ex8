@@ -1,6 +1,8 @@
 package com.example.adrian_2.ex8;
 
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.ContextMenu;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ public class MyEditText extends EditText{
         super(context, attrs, defStyleAttr);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public MyEditText(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
